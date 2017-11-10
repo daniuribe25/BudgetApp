@@ -1,0 +1,100 @@
+.alb-content{
+  background: rgba(255, 255, 255, 0.35);
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 2;
+}
+
+.background-image {
+  /* background-image: url(../images/fondo-login.jpg); */
+  /* background: #d9e5f7; */
+  background: #fff;
+  background-size: contain;
+  display: block;
+  filter: blur(2px);
+  height: 800px; 
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 1;;
+}
+
+.alb-login{
+  width: 90%;
+  padding: 14px;
+  margin:45% auto 25px auto;
+  border-radius:5px;  
+  background: white;
+  box-shadow: 0px 0px 27px -3px rgba(36,35,36,0.62);
+}
+
+.btn-ingresar{
+  border-radius: 5px;
+  height: 40px;
+  background-color: #9d62c8;
+}
+
+.alb-text-input{
+  font-size:15px;
+  height:50px;
+}
+
+.alb-title{
+  text-align:center;
+  color:azure;
+}
+
+
+.link-registrar{
+  width: 100%;
+  text-align: center;
+  text-decoration: underline;
+  color: #9d62c8
+
+}
+.invalidField{
+  font-size: 12px;
+  background: #fc9393;
+  border-radius: 3px; 
+  opacity: 0.8;
+  /* height: 20px;  */
+  margin: 0 0 0 5%;
+  padding: 3px 5px 3px 5px;
+}
+
+.loaderImage{
+  background-image: url('../images/Gear.gif');
+  width: 41px;
+  height: 41px;
+  margin: 0 auto;
+}
+
+.btnFloat {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid hsl(241, 100%, 68%);
+  background: #488AFF;
+  position: fixed;
+  top: 80%;
+  left: 80%;
+  color: white;
+  font-size: x-large;
+  text-align: center;
+  padding-top: 5.5px;
+  cursor: pointer;
+}
+
+.btnFloat:hover{
+  background: rgb(85, 96, 116);
+}
+
+.settingIcon{
+  float: right;
+  font-size: 25px;
+}
+
+.card:hover{
+  background: rgb(231, 239, 255);
+}

@@ -1,0 +1,12 @@
+<div class="background-image"></div>
+<ion-content padding class="alb-content">
+        <div class="alb-login">
+            <ion-input type="text" [(ngModel)]="user.user" block placeholder="{{res.Login}}" value="" class="alb-text-input"></ion-input>
+            <ion-input type="password" [(ngModel)]="user.pass" block placeholder="{{res.Password}}" value="" class="alb-text-input"></ion-input>
+
+            <button (tap)="validarCredenciales()" class="btn-ingresar" ion-button block value="">{{res.Log_in}}</button>
+            
+            <div class="link-registrar" (tap)="registrarUsuario()" >{{res.Btn_Register}}</div>
+        </div>
+
+</ion-content>

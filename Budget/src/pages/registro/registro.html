@@ -1,0 +1,59 @@
+<ion-header>
+
+  <ion-navbar color="headerColor">
+    <ion-title>registro</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <form [formGroup]="registerForm">
+      <ion-item>
+        <ion-label stacked>{{res.Name}}</ion-label>
+        <ion-input type="text" formControlName="name" [(ngModel)]="user.name"></ion-input>
+      </ion-item>
+      <div class="invalidField" *ngIf="!registerForm.controls.name.valid  && (registerForm.controls.name.dirty || submitAttempt)">
+        <span>{{res.Name+ " "+res.IsRequired}}.</span>
+    </div>
+      <ion-item>
+        <ion-label stacked>{{res.LastName}}</ion-label>
+        <ion-input type="text" formControlName="lastName" [(ngModel)]="user.lastName"></ion-input>
+      </ion-item>
+      <div class="invalidField" *ngIf="!registerForm.controls.lastName.valid  && (registerForm.controls.lastName.dirty || submitAttempt)">
+        <span>{{res.LastName+ " "+res.IsRequired}}.</span>
+    </div>
+      <ion-item>
+        <ion-label stacked>{{res.Login}}</ion-label>
+        <ion-input type="text" formControlName="user" [(ngModel)]="user.user" (blur)="validateUser()"></ion-input>
+      </ion-item>
+      <div class="invalidField" *ngIf="!registerForm.controls.user.valid  && (registerForm.controls.user.dirty || submitAttempt)">
+        <span>{{res.Login+ " "+res.IsRequired}} .</span>
+    </div>
+      <ion-item>
+        <ion-label stacked>{{res.Password}}</ion-label>
+        <ion-input type="password" formControlName="pass" [(ngModel)]="user.pass"></ion-input>
+      </ion-item>
+      <div class="invalidField" *ngIf="!registerForm.controls.pass.valid  && (registerForm.controls.pass.dirty || submitAttempt)">
+        <span>{{res.Password+ " "+ res.IsRequired}}.</span>
+    </div>
+      <ion-item>
+        <ion-label stacked>{{res.RepeatPass}}</ion-label>
+        <ion-input type="password" formControlName="repeatPass" [(ngModel)]="repeatPass"></ion-input>
+      </ion-item>
+      <div class="invalidField" *ngIf="!registerForm.controls.repeatPass.valid  && (registerForm.controls.repeatPass.dirty || submitAttempt)">
+        <span>{{res.RepeatPass+ " "+res.IsRequired}}.</span>
+    </div>
+      <ion-item>
+        <ion-label stacked>{{res.Email}}</ion-label>
+        <ion-input type="email" formControlName="email" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+      <div class="invalidField" *ngIf="!registerForm.controls.email.valid  && (registerForm.controls.email.dirty || submitAttempt)">
+        <span>{{res.Email+ " "+res.EmailFormatNovalid}}.</span>
+    </div>
+
+      <button ion-button full class="btn-alb" (tap)="registerUser()">{{res.Btn_Register}}</button>
+    </form>
+  </ion-list>
+</ion-content>

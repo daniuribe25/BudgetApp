@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar color="headerColor">
+    <ion-title>Budget</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <ion-card *ngFor="let budget of budgets" class="card">
+
+    <ion-card-header (click)="getBudgetItems()">
+      {{budget._id}}
+    </ion-card-header>
+
+    <ion-card-content>
+      {{budget.description}}
+      <ion-icon name="settings" class="settingIcon" (click)="openSettings(budget)"></ion-icon>
+    </ion-card-content>
+  </ion-card>
+
+  <div class="btnFloat" href="#" (click)="addBudgetForm()">
+    <ion-icon name="add"></ion-icon>
+  </div>
+</ion-content>
