@@ -10,22 +10,23 @@ import { Res_es as Res } from '../../assets/resourses/res_es';
   templateUrl: 'budget.html'
 })
 export class BudgetPage {
-  budgets:any;
-  user:any = "d" ;
-  idBudget:string= "";
-  budget:any;
-  isSave:boolean = true;;
+  budgets: any;
+  user: any = "d";
+  idBudget: string = "";
+  budget: any;
+  isSave: boolean = true;
+  oldBudgetId: string = "";
 
+  // constructor
   constructor(public navCtrl: NavController,
-              public budgetProvider: BudgetProvider,
-              public utilities:UtilitiesProvider,
-              public alertCtrl: AlertController,
-              public res: Res,
-              public actionSheetCtrl: ActionSheetController) {
-      this.findAllBudgets();
+    public budgetProvider: BudgetProvider,
+    public utilities: UtilitiesProvider,
+    public alertCtrl: AlertController,
+    public res: Res,
+    public actionSheetCtrl: ActionSheetController) {
+    this.findAllBudgets();
   }
 
-  
 
   findAllBudgets() {
     this.budgetProvider.findAllBudgets({ user_id: this.user }).then((res) => {
@@ -33,21 +34,22 @@ export class BudgetPage {
     });
   }
 
-  addBudgetForm(id, description) {
-    debugger;
+  // open a modal form to insert budget data
+  addBudgetForm(id, name, description) {
+    this.oldBudgetId = id;
     let prompt = this.alertCtrl.create({
       title: 'Crear Budget',
       inputs: [
         {
-          name: '_id',
+          name: 'name',
           placeholder: 'Nombre',
-          value: id 
+          value: name
         },
         {
           name: 'description',
           placeholder: 'Descripción',
           type: 'textarea',
-          value: description 
+          value: description
         }
       ],
       buttons: [
@@ -59,6 +61,7 @@ export class BudgetPage {
         {
           text: 'Guardar',
           handler: data => {
+            data._id = id;
             this.validateBudget(data)
           }
         }
@@ -67,51 +70,61 @@ export class BudgetPage {
     prompt.present();
   }
 
-  validateBudget(budget){
-    if(this.isSave){
-    this.budgetProvider.findBudget({budget}).then((res) => {
-      if (Object.keys(res).length) {
-        this.utilities.showAlert("Ya hay un Budget con este nombre");
-      }
-      this.saveBudget(budget);
-    });
-  }else{
+  // validate the form is correct
+  validateBudget(budget) {
+    if (this.isSave) {
+      this.budgetProvider.findBudget({ budget }).then((res) => {
+        if (Object.keys(res).length) {
+          this.utilities.showAlert("Ya hay un Budget con este nombre");
+        }
+        this.saveBudget(budget);
+      });
+    } else {
       this.updateBudget(budget);
-  }
+    }
   }
 
-
-  saveBudget(budget){
+  saveBudget(budget) {
+    debugger;
     budget.user_id = this.user;
     this.budgetProvider.saveBudget(budget).then((res) => {
-      if(!res.hasOwnProperty('ok'))
+      if (!res.hasOwnProperty('ok'))
         this.utilities.showAlert(this.res.Error);
-      else 
-       this.budgets.push(budget);
+      else
+        this.findAllBudgets();
     });
   }
 
-  updateBudget(budget){
+  updateBudget(budget) {
     budget.user_id = this.user;
     this.budgetProvider.updateBudget(budget).then((res) => {
-      if(!res.hasOwnProperty('ok'))
+      if (!res.hasOwnProperty('ok'))
         this.utilities.showAlert(this.res.Error);
-      else 
-       this.budgets.push(budget);
+      else
+        debugger;
+      this.budgets.map(function (x) {
+        if (x._id === budget._id) {
+          x.name = budget.name;
+          x.description = budget.description;
+        }
+        return x;
+      });
     });
   }
 
-  openSettings(budget){
+  // open settings to execute some action
+  openSettings(budget) {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Settings',
       buttons: [
-        { text: 'Editar', 
+        {
+          text: 'Editar',
           icon: 'paper',
           handler: () => {
             this.isSave = false;
-            this.addBudgetForm(budget._id,budget.description);
+            this.addBudgetForm(budget._id, budget.name, budget.description);
           }
-        },{
+        }, {
           text: 'Por defecto',
           icon: 'medal',
           handler: () => {
@@ -122,36 +135,41 @@ export class BudgetPage {
           text: 'Eliminar',
           icon: 'trash',
           handler: () => {
-            this.removeBudget(budget._id);
+            this.removeBudget(budget);
           }
-        },{
+        }, {
           text: 'Salir',
           role: 'cancel',
-          icon: 'redo'}
+          icon: 'redo'
+        }
       ]
     });
     actionSheet.present();
   }
 
-  getBudgetItems(_id){
+  getBudgetItems(_id) {
     alert("sdfsd");
   }
 
-  setDefault(_id){
+
+  setDefault(_id) {
     this.budgetProvider.setDefault(_id).then((res) => {
-      if(!res.hasOwnProperty('ok'))
+      if (!res.hasOwnProperty('ok'))
         this.utilities.showAlert(this.res.Error);
     });
   }
 
-  removeBudget(_id){
-    this.budgetProvider.removeBudget(_id).then((res) => {
-      if(!res.hasOwnProperty('ok'))
+  removeBudget(budget) {
+    this.budgetProvider.removeBudget(budget._id).then((res) => {
+      if (!res.hasOwnProperty('ok'))
         this.utilities.showAlert(this.res.Error);
       else {
-      this.budgets = new List<any>(this.budgets)
-        .Where(x => x._id !== _id)
-        .ToArray();
+        this.budgets = new List<any>(this.budgets)
+          .Where(x => x._id !== budget._id)
+          .ToArray();
+        if (budget.isDefault && this.budgets.length) {
+          this.setDefault(this.budgets[0]._id);
+        }
       }
     });
   }

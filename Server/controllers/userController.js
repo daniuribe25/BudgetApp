@@ -1,5 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
-var mongoUrl = 'mongodb://localhost:27017/BudgetDB';
+// var mongoUrl = 'mongodb://localhost:27017/BudgetDB';
+var mongoUrl = 'mongodb://duribel:danieluribe52@budgetdb-shard-00-00-zuyzw.mongodb.net:27017,budgetdb-shard-00-01-zuyzw.mongodb.net:27017,budgetdb-shard-00-02-zuyzw.mongodb.net:27017/BudgetDB?ssl=true&replicaSet=BudgetDB-shard-0&authSource=admin';
 var nodemailer = require('nodemailer');
 
 //GET - Return all users in the DB

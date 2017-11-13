@@ -17,12 +17,6 @@ export class TabsPage {
   
 
   constructor(public navParams:NavParams, public alertCtrl:AlertController) {
-     let alert = this.alertCtrl.create({
-      title: 'Datos Login',
-      subTitle: 'User: '+ this.navParams.get('user')+"\n Pass:" + this.navParams.get('pass'),
-      buttons: ['OK']
-    });
-    alert.present();
 
   }
 }

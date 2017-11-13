@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,AlertController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { RegistroPage } from '../registro/registro';
 import { Res_es as Res } from '../../assets/resourses/res_es';
